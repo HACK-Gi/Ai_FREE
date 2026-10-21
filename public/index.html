@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#070a11">
+<meta name="description" content="AIDEN — a private, local-first AI workspace.">
+<title>AIDEN · DeepSeek Mix</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%234d6bfe'/%3E%3Cstop offset='1' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='18' fill='url(%23g)'/%3E%3Cpath d='M32 13l5.7 12.9L51 32l-13.3 6.1L32 51l-5.7-12.9L13 32l13.3-6.1z' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="shell">
+
+  <aside id="sidebar" class="sidebar" aria-label="Workspace">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">◈</div>
+      <div class="brand-text">
+        <strong>AIDEN</strong>
+        <span>DeepSeek Mix</span>
+      </div>
+    </div>
+
+    <button id="newChatBtn" class="new-chat" type="button">
+      <span class="new-chat-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="17" height="17"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </span>
+      <span>New chat</span>
+      <kbd>⌘K</kbd>
+    </button>
+
+    <div class="side-label">Session</div>
+    <div class="model-card">
+      <div class="model-top">
+        <span class="model-orb" aria-hidden="true"></span>
+        <div>
+          <strong id="modelLabel">checking…</strong>
+          <span id="modelBase">model endpoint</span>
+        </div>
+      </div>
+      <div id="sideStatus" class="status-line is-checking">
+        <span class="dot" aria-hidden="true"></span>
+        <span id="sideStatusText">connecting</span>
+      </div>
+    </div>
+
+    <div class="side-note">
+      <span class="note-icon" aria-hidden="true">◌</span>
+      <p><strong>Private session.</strong> History stays in this browser. Reasoning never leaves the server.</p>
+    </div>
+
+    <div class="context-card">
+      <div class="context-row">
+        <span>Context sent</span>
+        <strong id="contextCount">0 messages</strong>
+      </div>
+      <div class="context-track"><span id="contextBar"></span></div>
+      <p>Up to 32 recent turns are sent with each request.</p>
+    </div>
+
+    <div class="side-foot">
+      <button id="themeBtn" class="theme-btn" type="button" title="Toggle theme" aria-label="Toggle theme">
+        <span id="themeIcon" aria-hidden="true">☾</span>
+        <span id="themeText">Dark</span>
+      </button>
+      <span class="version">v2.0</span>
+    </div>
+  </aside>
+
+  <div id="scrim" class="scrim" hidden></div>
+
+  <main class="main">
+    <header class="topbar">
+      <button id="menuBtn" class="icon-btn menu-btn" type="button" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="19" height="19"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+      </button>
+      <div class="top-title">
+        <h1 id="chatTitle">New conversation</h1>
+        <p id="chatSubtitle">AIDEN is listening</p>
+      </div>
+      <div class="top-actions">
+        <div id="topStatus" class="status-pill is-checking">
+          <span class="dot" aria-hidden="true"></span>
+          <span id="topStatusText">checking</span>
+        </div>
+      </div>
+    </header>
+
+    <div id="offlineHint" class="offline-hint" hidden>
+      <strong>Model endpoint is not reachable.</strong>
+      <span>Start the model, then click the status pill to retry.</span>
+    </div>
+
+    <section id="chat" class="chat" aria-label="Conversation">
+      <div id="empty" class="empty">
+        <div class="hero-mark" aria-hidden="true">
+          <span class="hero-ring ring-one"></span>
+          <span class="hero-ring ring-two"></span>
+          <span class="hero-core">◈</span>
+        </div>
+        <p class="eyebrow">Private bench · no account</p>
+        <h2>What are we building?</h2>
+        <p class="hero-sub">Ask for code, a plan, a teardown, or a scene. AIDEN keeps the thread and ships the whole thing.</p>
+
+        <div class="prompt-grid">
+          <button class="prompt-card" type="button" data-prompt="Explain this error like I am new to coding, then show the exact fix: ModuleNotFoundError: No module named 'requests'">
+            <span class="prompt-icon" aria-hidden="true">?</span>
+            <span class="prompt-copy"><strong>Explain an error</strong><small>Plain language, then the fix.</small></span>
+          </button>
+          <button class="prompt-card" type="button" data-prompt="Write a complete Python script that renames every .jpg file in a folder to photo-001.jpg, photo-002.jpg, and so on. Include a dry-run mode and usage notes.">
+            <span class="prompt-icon" aria-hidden="true">⌘</span>
+            <span class="prompt-copy"><strong>Write a script</strong><small>Complete, runnable, no stubs.</small></span>
+          </button>
+          <button class="prompt-card" type="button" data-prompt="Design a clean one-page website for a small coffee shop. Give me the structure, copy, color palette, and a single-file HTML/CSS implementation.">
+            <span class="prompt-icon" aria-hidden="true">◧</span>
+            <span class="prompt-copy"><strong>Design a page</strong><small>Structure, copy, and code.</small></span>
+          </button>
+          <button class="prompt-card" type="button" data-prompt="សួស្តី! ជួយខ្ញុំរៀន Python ពីដំបូង។ ចាប់ផ្តើមដោយមេរៀនខ្លីៗ ៥ ជំហាន។">
+            <span class="prompt-icon" aria-hidden="true">ខ</span>
+            <span class="prompt-copy"><strong>រៀន Python</strong><small>មេរៀនខ្លីៗ ងាយស្រួល</small></span>
+          </button>
+        </div>
+
+        <p class="hero-note"><span aria-hidden="true">⌁</span> Your prompt is bundled server-side. It is never shown in the chat.</p>
+      </div>
+
+      <div id="messages" class="messages" aria-live="polite" aria-relevant="additions text"></div>
+    </section>
+
+    <button id="jumpBtn" class="jump-btn" type="button" aria-label="Jump to latest message" hidden>
+      <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+
+    <footer class="composer-wrap">
+      <form id="form" class="composer" autocomplete="off">
+        <label class="sr-only" for="input">Message AIDEN</label>
+        <textarea id="input" rows="1" maxlength="16000" placeholder="Message AIDEN…" enterkeyhint="send"></textarea>
+        <div class="composer-bar">
+          <span id="charCount" class="char-count">0 / 16,000</span>
+          <span class="composer-hint">Enter to send · Shift+Enter for a new line</span>
+          <div class="composer-actions">
+            <button id="stopBtn" class="stop-btn" type="button" hidden>Stop</button>
+            <button id="sendBtn" class="send-btn" type="submit" aria-label="Send message" title="Send" disabled>
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 19V5M12 5l-6 6M12 5l6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </form>
+      <p class="disclaimer">AIDEN can be wrong. Verify anything important.</p>
+    </footer>
+  </main>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="/app.js" defer></script>
+</body>
+</html>
