@@ -11,6 +11,11 @@ from pathlib import Path
 
 BASE_URL = os.environ.get("LLM_BASE_URL", "https://text.pollinations.ai/openai").rstrip("/")
 MODEL = os.environ.get("LLM_MODEL", "openai-fast")
+# A loopback endpoint can never be reached from a serverless function. If the
+# dashboard still carries local settings, fall back instead of going offline.
+if any(host in BASE_URL for host in ("127.0.0.1", "localhost", "0.0.0.0")):
+    BASE_URL = "https://text.pollinations.ai/openai"
+    MODEL = "openai-fast"
 API_KEY = os.environ.get("LLM_API_KEY", "").strip()
 MAX_TOKENS = int(os.environ.get("MAX_TOKENS", "12000"))
 TEMPERATURE = float(os.environ.get("TEMPERATURE", "0.7"))

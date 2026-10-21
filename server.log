@@ -24,3 +24,8 @@
 [deepseek-mix] endpoint  https://text.pollinations.ai/openai
 [deepseek-mix] api key   none (local mode)
 [deepseek-mix] prompt    set
+[deepseek-mix] website   http://127.0.0.1:3000
+[deepseek-mix] model     openai-fast
+[deepseek-mix] endpoint  https://text.pollinations.ai/openai
+[deepseek-mix] api key   none (local mode)
+[deepseek-mix] prompt    set
